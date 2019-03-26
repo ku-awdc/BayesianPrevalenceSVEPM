@@ -7,11 +7,13 @@
 bugs_model <- "
 	
 	model{
-		Positives ~ dbin(apparent_prevalence, TotalTested)
-		apparent_prevalence ~ dbeta(1,1)
+		y ~ dbin(ap, n)
+		#Uniform (non-informative) prior for apparent prevalence (ap)
+		ap ~ dbeta(1,1)
 		
-		#data# Positives, TotalTested
-		#monitor# apparent_prevalence
+		#data# y, n
+		#inits# ap
+		#monitor# ap
 	}
 
 "
@@ -20,8 +22,9 @@ bugs_model <- "
 library('runjags')
 
 ## Define the data in the R working environment:
-Positives <- 1210
-TotalTested <- 4072
+y <- 1210
+n <- 4072
+ap <- 0.1
 
 ## Run the model:
 results <- run.jags(bugs_model, n.chains=2, burnin=5000, sample=10000)
@@ -106,8 +109,8 @@ for(i in 4:iters){
 }
 
 
-plot(parameter, type='l', main='Trace plot of parameter values')
-plot(51:iters,parameter[-(1:50)], type='l', main='Trace plot of stationary chain',xlab='Index',xlim=c(0,iters))
+plot(parameter, type='l', main='Trace plot of parameter values', ylim=c(0.25,0.32))
+plot(51:iters,parameter[-(1:50)], type='l', main='Trace plot of stationary chain',xlab='Index',xlim=c(0,iters), ylim=c(0.25,0.32))
 if(iters==1000){
 hist(parameter[-(1:50)], breaks='fd', main='Histogram of 950 sampled values')
 }else if(iters==10050){
