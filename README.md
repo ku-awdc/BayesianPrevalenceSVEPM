@@ -33,7 +33,7 @@ It may seem that OpenBUGS has only one step but it has a lot of "clicking" when 
 
 Each of the examples that we will run through has two versions:  the .R files are for JAGS, and the .odc files are for OpenBUGS.  We recommend that you download these files in advance of the workshop.
 
-### Advert
+## Advert
 
 Some of the material covered during this workshop is taken from a 5-day course on Bayesian modelling (with emphasis on MCMC) that will be next run in Glasgow, Scotland from 11th-15th November 2019.  For more information, see:
 
